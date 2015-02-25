@@ -93,10 +93,10 @@ window.triggerMap = ->
 
     MapHelper.showMap(mapCanvas.get(0),
       {
-        mapHeight:	300,
-        mapLat:  		mapCanvas.attr('data-latitude'),
-        mapLng:  		mapCanvas.attr('data-longitude'),
-        zoom: 			10
+        mapHeight:      300,
+        mapLat:         mapCanvas.attr('data-latitude'),
+        mapLng:         mapCanvas.attr('data-longitude'),
+        zoom:           10
         #scaleControl: ,
         #scrollwheel: ,
         #showMarker: ,
@@ -168,12 +168,12 @@ window.triggerMap = ->
 
     MapHelper.searchShowMap($('.map-canvas').get(0),
       {
-        mapHeight:     	300,
-        trigger:       	$('.map-search-button'),
-        addressInput: 	$('.address'), #could be multiple
-        latInput:     	$('#place_latitude'),
-        lngInput:     	$('#place_longitude'),
-        zoom:         	10
+        mapHeight:      300,
+        trigger:        $('.map-search-button'),
+        addressInput:   $('.address'), #could be multiple
+        latInput:       $('#place_latitude'),
+        lngInput:       $('#place_longitude'),
+        zoom:           10
         #scaleControl: ,
         #scrollwheel: ,
         #showMarker: ,
@@ -257,14 +257,14 @@ window.triggerMap = ->
       if data.length
         MapHelper.showMapWithMarkers($('.map-index').get(0),
           {
-            mapHeight:   	400,
-            mapLat: 			data[0].latitude,  #center
-            mapLng: 			data[0].longitude, #center
-            zoom:       	2,
-            showMarker: 	false,
-            draggable:   	false,
-            controller: 	'places',
-            titleField: 	'name'
+            mapHeight:    400,
+            mapLat:       data[0].latitude,  #center
+            mapLng:       data[0].longitude, #center
+            zoom:         2,
+            showMarker:   false,
+            draggable:    false,
+            controller:   'places',
+            titleField:   'name'
           }, data)
     )
 
