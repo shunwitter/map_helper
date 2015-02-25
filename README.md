@@ -203,11 +203,10 @@ afterShow			| function 			| null
 
 ##Display map with markers
 
-You can drop many map markers.
+You can drop map markers as many as you want.
+(Return json from your Rails controller.)
 
 ###Controller
-
-Return json from your Rails controller.
 
 /app/controllers/places_controller.rb
 
@@ -255,12 +254,34 @@ window.triggerMap = ->
 						mapHeight: 	400,
 						mapLat: data[0].latitude,  #center
 						mapLng: data[0].longitude, #center
+						zoom: 			2,
 						showMarker: false,
 						draggable: 	false,
-						zoom: 			2,
 						controller: 'places',
 						titleField: 'name'
 					}, data)
 		)
 
 ```
+
+####Options
+
+```controller``` and ```titleField``` are used for adding [Info windows](https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple).
+
+Name 					| Type 					| Default
+------------- | ------------- | ------------------------
+mapHeight 		| integer 			| 300
+mapLat				| float 				| 35.6894875 	#Tokyo
+mapLng				| float 				| 139.6917064 #Tokyo
+zoom					| integer				| 4
+scaleControl	| boolean 			| true
+scrollwheel		| boolean 			| false
+showMarker		| boolean 			| true
+draggable			| boolean 			| false
+afterShow			| function 			| null
+controller		| string 				| "posts"
+titleField		| string 				| "title"
+
+
+
+
