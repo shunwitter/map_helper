@@ -7,9 +7,7 @@ Easy way to implement google maps in your Rails app or other.
 Place map_helper in vendor folder.
 vendor/javascripts/map_helper/map_helper.coffee
 
-/app/assets/javascripts/application.js
-
-```
+```/app/assets/javascripts/application.js
 //= require map_helper/map_helper
 ```
 
