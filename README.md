@@ -7,7 +7,9 @@ Easy way to implement google maps in your Rails app or other.
 Place map_helper in vendor folder.
 vendor/javascripts/map_helper/map_helper.coffee
 
-```/app/assets/javascripts/application.js
+/app/assets/javascripts/application.js
+
+```
 //= require map_helper/map_helper
 ```
 
@@ -58,7 +60,7 @@ $(document).on 'page:load', ready
 
 ### View
 
-app/views/places/show
+app/views/places/show.html.erb
 
 ```erb
 
@@ -125,7 +127,7 @@ By clicking trigger, it sets latitude and longitude and display the map.
 
 ### View
 
-app/views/places/new
+app/views/places/new.html.erb
 
 ```erb
 <%= form_for(@place) do |f| %>
@@ -223,7 +225,7 @@ end
 
 ### View
 
-app/views/places/index
+app/views/places/index.html.erb
 
 ```erb
 
