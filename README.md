@@ -7,7 +7,7 @@ Easy way to implement google maps in your Rails app or other.
 Place map_helper in vendor folder.
 vendor/javascripts/map_helper/map_helper.coffee
 
-/app/javascripts/application.js
+/app/assets/javascripts/application.js
 
 ```
 //= require map_helper/map_helper
@@ -25,6 +25,8 @@ rails g scaffold place name:string address:stiring latitude:float longitude:floa
 Load google maps api.
 Make it compatible with turbolinks if needed.
 
+/app/assets/javascripts/places.js.coffee
+
 ```coffee
 
 ready = ->
@@ -40,6 +42,9 @@ ready = ->
 	else
 		triggerMap()
 
+window.triggerMap = ->
+	# your code
+
 # For turbolinks
 $(document).ready(ready)
 $(document).on 'page:load', ready
@@ -47,11 +52,78 @@ $(document).on 'page:load', ready
 ```
 
 
+----------------------------------------------------------------------------------------
+
+
+
+##Display map
+
+### View
+
+app/views/places/show
+
+```erb
+
+<div class="map-show-canvas" 
+						data-latitude="<%= @place.latitude %>"
+						data-longitude="<%= @place.longitude %>">
+</div>
+
+```
+
+### Javascript
+
+```MapHelper.showMap(canvas, options)```
+
+/app/assets/javascripts/places.js.coffee
+
+```coffee
+
+window.triggerMap = ->
+
+	# --- show --- #
+	mapCanvas = $('.map-show-canvas')
+	if mapCanvas.length && mapCanvas.attr('data-latitude')
+
+		MapHelper.showMap(mapCanvas.get(0),
+			{
+				mapHeight: 300,
+				mapLat:  mapCanvas.attr('data-latitude'),
+				mapLng:  mapCanvas.attr('data-longitude'),
+				zoom: 10
+				#scaleControl: ,
+				#scrollwheel: ,
+				#showMarker: ,
+				#draggable: ,
+			}
+		)
+
+```
+
+####Options
+
+Name 					| Type 					| Default
+------------- | ------------- | ------------------------
+mapHeight 		| integer 			| 300
+mapLat				| float 				| 35.6894875 	#Tokyo
+mapLng				| float 				| 139.6917064 #Tokyo
+zoom					| integer				| 4
+scaleControl	| boolean 			| true
+scrollwheel		| boolean 			| false
+showMarker		| boolean 			| true
+draggable			| boolean 			| false
+afterShow			| function 			| null
+
+
+
+----------------------------------------------------------------------------------------
+
+
 
 ##Search location and display map
 
 Add "address" class to your text field (could be multipul).
-By clicking trigger, it gets/sets latitude and longitude and display the map.
+By clicking trigger, it sets latitude and longitude and display the map.
 
 ### View
 
@@ -78,6 +150,8 @@ app/views/places/new
 ```
 
 ### Javascript
+
+```MapHelper.searchShowMap(canvas, options)```
 
 ```coffee
 
@@ -111,6 +185,7 @@ Name 					| Type 					| Default
 ------------- | ------------- | ------------------------
 mapHeight 		| integer 			| 300
 trigger 			| jQuery object | $('.search-map-trigger')
+addressInput  | jQuery object | $('.search-map-address')
 latInput			| jQuery object | $('input.latitude')
 lngInput			| jQuery object | $('input.longitude')
 zoom					| integer				| 4
@@ -122,3 +197,70 @@ afterShow			| function 			| null
 
 
 
+----------------------------------------------------------------------------------------
+
+
+
+##Display map with markers
+
+You can drop many map markers.
+
+###Controller
+
+Return json from your Rails controller.
+
+/app/controllers/places_controller.rb
+
+```ruby
+
+def index
+  @places = Place.all
+  respond_to do |f|
+    f.html
+    f.json { render json: @places }
+  end
+end
+
+```
+
+
+### View
+
+app/views/places/new
+
+```erb
+
+<div class="map-index"></div>
+
+```
+
+### Javascript
+
+```MapHelper.showMapWithMarkers(canvas, options, json)```
+
+```coffee
+
+window.triggerMap = ->
+
+	# --- index --- #
+	if $('.map-index').length
+		$.ajax(
+			type: 'GET',
+			url: '/places.json',
+			# data: { if you need }
+		).done( (data) ->
+			if data.length
+				MapHelper.showMapWithMarkers($('.map-index').get(0),
+					{
+						mapHeight: 	400,
+						mapLat: data[0].latitude,  #center
+						mapLng: data[0].longitude, #center
+						showMarker: false,
+						draggable: 	false,
+						zoom: 			2,
+						controller: 'places',
+						titleField: 'name'
+					}, data)
+		)
+
+```

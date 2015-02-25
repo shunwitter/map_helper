@@ -97,7 +97,7 @@ class window.MapHelper
 	@searchShowMap = (canvas, options) ->
 
 		trigger 				= @optionValue( options.trigger,  			$('.search-map-trigger') )
-		#addressInput 		= @optionValue( options.addressInput,  	$('.search-map-address') )
+		addressInput 		= @optionValue( options.addressInput,  	$('.search-map-address') )
 		latInput				= @optionValue( options.latInput,  			$('input.latitude') )
 		lngInput				= @optionValue( options.lngInput,  			$('input.longitude') )
 		mapHeight 			= @optionValue( options.mapHeight, 			300 )
