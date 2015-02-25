@@ -133,6 +133,8 @@ afterShow     | function      | null
 Add "address" class to your text field (could be multipul).
 By clicking trigger, it sets latitude and longitude and display the map.
 
+[DEMO](https://shunwitter-test-app.herokuapp.com/places/new)
+
 ### View
 
 app/views/places/new.html.erb
