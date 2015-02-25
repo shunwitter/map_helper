@@ -22,8 +22,36 @@ Assuming you hava Place model.
 rails g scaffold place name:string address:stiring latitude:float longitude:float
 ```
 
+Load google maps api.
+Make it compatible with turbolinks if needed.
+
+```coffee
+
+ready = ->
+
+	if !window.google
+
+		script = document.createElement('script')
+		script.type = 'text/javascript';
+		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
+		    					'language=ja&callback=triggerMap'
+		document.body.appendChild(script)
+	
+	else
+		triggerMap()
+
+# For turbolinks
+$(document).ready(ready)
+$(document).on 'page:load', ready
+
+```
+
+
 
 ##Search location and display map
+
+Add "address" class to your text field (could be multipul).
+By clicking trigger, it gets/sets latitude and longitude and display the map.
 
 ### View
 
@@ -53,19 +81,6 @@ app/views/places/new
 
 ```coffee
 
-ready = ->
-
-	if !window.google
-
-		script = document.createElement('script')
-		script.type = 'text/javascript';
-		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
-		    					'language=ja&callback=triggerMap'
-		document.body.appendChild(script)
-	
-	else
-		triggerMap()
-
 window.triggerMap = ->
 
 	# --- new/edit --- #
@@ -88,19 +103,14 @@ window.triggerMap = ->
 			}
 		)
 
-# For turbolinks
-$(document).ready(ready)
-$(document).on 'page:load', ready
-
 ```
 
 ####Options
 
-name 					| type 					| default
+Name 					| Type 					| Default
 ------------- | ------------- | ------------------------
 mapHeight 		| integer 			| 300
 trigger 			| jQuery object | $('.search-map-trigger')
-addressInput 	| jQuery object | $('.search-map-address')
 latInput			| jQuery object | $('input.latitude')
 lngInput			| jQuery object | $('input.longitude')
 zoom					| integer				| 4
