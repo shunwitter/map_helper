@@ -2,15 +2,10 @@
 # map_helper
 Easy way to implement google maps in your Rails app or other.
 
-# Place js file in vendor folder
 
-└ vendor
-  └ javascripts
-    └ map_helper
-      └ map_helper.coffee
-
-
-# Load in application.js
+##Load
+Place map_helper in vendor folder.
+vendor/javascripts/map_helper/map_helper.coffee
 
 /app/javascripts/application.js
 
@@ -18,30 +13,40 @@ Easy way to implement google maps in your Rails app or other.
 //= require map_helper/map_helper
 ```
 
-# Rails app
 
-Assuming you hava Place model
+##Rails app
+
+Assuming you hava Place model.
 
 ```
 rails g scaffold place name:string address:stiring latitude:float longitude:float
 ```
 
-#Show Map
+
+##Search location and display map
 
 ### View
 
 app/views/places/new
 
 ```erb
-<%= f.label :address %><br>
-<%= f.text_field :address, class: "address" %>
-<%= link_to "SEARCH", "#", class: "map-search-button" %>
-<div class="map-canvas" style="height: 0;"
-            data-lat="<%= f.object.latitude %>"
-            data-lng="<%= f.object.longitude %>">
-</div>
-<%= f.text_field :latitude, readonly: true %>
-<%= f.text_field :longitude,readonly: true %>
+<%= form_for(@place) do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+		<%= f.label :address %><br>
+		<%= f.text_field :address, class: "address" %>
+		<%= link_to "SEARCH", "#", class: "map-search-button" %>
+		<div class="map-canvas" style="height: 0;"
+		            data-lat="<%= f.object.latitude %>"
+		            data-lng="<%= f.object.longitude %>">
+		</div>
+		<%= f.text_field :latitude, readonly: true %>
+		<%= f.text_field :longitude,readonly: true %>
+	</div>
+<% end %>
 ```
 
 ### Javascript
