@@ -52,10 +52,10 @@ $(document).on 'page:load', ready
 ```
 
 
-----------------------------------------------------------------------------------------
 
 
 
+　　
 ##Display map
 
 ### View
@@ -116,10 +116,10 @@ afterShow			| function 			| null
 
 
 
-----------------------------------------------------------------------------------------
 
 
 
+　　
 ##Search location and display map
 
 Add "address" class to your text field (could be multipul).
@@ -197,10 +197,10 @@ afterShow			| function 			| null
 
 
 
-----------------------------------------------------------------------------------------
 
 
 
+　　
 ##Display map with markers
 
 You can drop map markers as many as you want.
@@ -225,7 +225,7 @@ end
 
 ### View
 
-app/views/places/new
+app/views/places/index
 
 ```erb
 
