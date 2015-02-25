@@ -68,27 +68,47 @@ ready = ->
 
 window.triggerMap = ->
 
-	# --- show --- #
-	mapCanvas = $('.map-show-canvas')
-	if mapCanvas.length && mapCanvas.attr('data-latitude')
+	# --- new/edit --- #
+	if $('.map-search-button').length
 
-		MapHelper.showMap(mapCanvas.get(0),
+		MapHelper.searchShowMap($('.map-canvas').get(0),
 			{
-				mapHeight: 300,
-				mapLat:  mapCanvas.attr('data-latitude'),
-				mapLng:  mapCanvas.attr('data-longitude'),
-				zoom: 10
+				mapHeight: 		300,
+				trigger: 			$('.map-search-button'),
+				addressInput: $('.address'), #could be multiple
+				latInput: 		$('#place_latitude'),
+				lngInput: 		$('#place_longitude'),
+				zoom: 				10
 				#scaleControl: ,
 				#scrollwheel: ,
 				#showMarker: ,
 				#draggable: ,
+				afterShow: -> 
+					console.log "Map is displayed."
 			}
 		)
-
 
 # For turbolinks
 $(document).ready(ready)
 $(document).on 'page:load', ready
 
 ```
+
+####Options
+
+name 					| type 					| default
+------------- | ------------- | ------------------------
+mapHeight 		| integer 			| 300
+trigger 			| jQuery object | $('.search-map-trigger')
+addressInput 	| jQuery object | $('.search-map-address')
+latInput			| jQuery object | $('input.latitude')
+lngInput			| jQuery object | $('input.longitude')
+zoom					| integer				| 4
+scaleControl	| boolean 			| true
+scrollwheel		| boolean 			| false
+showMarker		| boolean 			| true
+draggable			| boolean 			| false
+afterShow			| function 			| null
+
+
 
