@@ -41,7 +41,7 @@ ready = ->
 
   if !window.google
 
-  // if !window.google.maps (if you are useing other google api)
+  # if !window.google.maps (if you are useing other google api)
 
     script = document.createElement('script')
     script.type = 'text/javascript';
