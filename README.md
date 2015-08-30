@@ -53,7 +53,7 @@ ready = ->
     triggerMap()
 
 window.triggerMap = ->
-  # your code
+  # your code (see examples below)
 
 # For turbolinks
 $(document).ready(ready)
