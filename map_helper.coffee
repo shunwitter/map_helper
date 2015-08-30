@@ -19,6 +19,32 @@ class window.MapHelper
     }
   ]
 
+  @CLUSTER_STYLES = (path = '/assets/map_helper/images', imageName = 'cluster') ->
+    [
+      {
+        url: "#{path}/#{imageName}55.png",
+        height: 55,
+        width: 55,
+        anchor: [19, 0],
+        textColor: '#fff',
+        textSize: 16
+      }, {
+        url: "#{path}/#{imageName}75.png",
+        height: 75,
+        width: 75,
+        anchor: [28, 0],
+        textColor: '#fff',
+        textSize: 20
+      }, {
+        url: "#{path}/#{imageName}95.png",
+        height: 95,
+        width: 95,
+        anchor: [38, 0],
+        textColor: '#fff',
+        textSize: 26
+      }
+    ]
+
 
   # a = b || c doesn't work for boolean value
   # Javascript falsy values
@@ -133,7 +159,7 @@ class window.MapHelper
     trigger.on 'click', (e) ->
       e.preventDefault()
 
-      # Address field could be multiple elements. 
+      # Address field could be multiple elements.
       address = []
       $('.address').each( ->
         address.push($(this).val())
@@ -148,7 +174,7 @@ class window.MapHelper
       geocoder.geocode( { 'address': address }, (results, status) ->
         if status == google.maps.GeocoderStatus.OK
           location = results[0].geometry.location
-          
+
           # Set value
           latInput.val(location.lat())
           lngInput.val(location.lng())
@@ -183,9 +209,12 @@ class window.MapHelper
 
   @showMapWithMarkers = (canvas, options, json) ->
 
-    controller = options.controller || 'posts'
-    titleField = options.titleField || 'title'
-    
+    controller    = @optionValue( options.controller, 'posts' )
+    titleField    = @optionValue( options.titleField, 'title' )
+    showClusterer = @optionValue( options.showClusterer, true )
+    clustererImagesPath = @optionValue( options.clustererImagesPath, '/assets/map_helper/images' )
+    options.showMarker = false # markers will be added later
+
     mapResult = @showMap(canvas, options)
     markers = []
     infoWindows = []
@@ -206,7 +235,7 @@ class window.MapHelper
       })
 
       # Create info window
-      content = '<a href="/' + controller + '/' + item.id + '"> ' + 
+      content = '<a href="/' + controller + '/' + item.id + '"> ' +
                   item[titleField] +
                 '</a>';
       infoWindows[i] = new google.maps.InfoWindow({ content: content })
@@ -224,9 +253,18 @@ class window.MapHelper
         )
       addEvent(i)
 
+    if showClusterer
+      MapHelper.showClusterer(mapResult.googleMap, markers)
 
 
+  # --------------------------------------------------------------------
+  # Show clusters
+  # --------------------------------------------------------------------
 
+  #google-maps-utility-library-v3
+  @showClusterer = (map, markers, options = { gridSize: 50, maxZoom: 15}) =>
+    options.styles = @CLUSTER_STYLES()
+    window.mc = new MarkerClusterer(map, markers, options)
 
 
 
