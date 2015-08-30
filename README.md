@@ -41,12 +41,14 @@ ready = ->
 
   if !window.google
 
+  // if !window.google.maps (if you are useing other google api)
+
     script = document.createElement('script')
     script.type = 'text/javascript';
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
                   'language=ja&callback=triggerMap'
     document.body.appendChild(script)
-  
+
   else
     triggerMap()
 
@@ -72,7 +74,7 @@ app/views/places/show.html.erb
 
 ```erb
 
-<div class="map-show-canvas" 
+<div class="map-show-canvas"
             data-latitude="<%= @place.latitude %>"
             data-longitude="<%= @place.longitude %>">
 </div>
@@ -182,7 +184,7 @@ window.triggerMap = ->
         #scrollwheel: ,
         #showMarker: ,
         #draggable: ,
-        afterShow: -> 
+        afterShow: ->
           console.log "Map is displayed."
       }
     )
